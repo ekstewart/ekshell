@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <vector>
-#include "../header/CCC.h"
+#include "../header/Base.h"
 
 using namespace std;
 
