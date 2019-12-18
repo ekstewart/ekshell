@@ -1,21 +1,21 @@
-#ifndef CCC_H
-#define CCC_H
+#ifndef BASE_H
+#define BASE_H
 
 #include <string>
 #include <vector>
 
 using namespace std;
 
-class CCC {
+class Base {
 	protected:
 		bool runStatus;
     public:
-        CCC(){} //Constructor
+        Base(){} //Constructor
         virtual bool executeCmd() = 0;
         
 }; //Base for composite pattern
 
-class Command: public CCC{
+class Command: public Base{
 	private:
 		vector<string> parsedCmdList;
 		vector<char*> args;
@@ -33,68 +33,68 @@ class Command: public CCC{
 		inline vector<string> getParsedCmdList(){return parsedCmdList;}
 };
 
-class Connect : public CCC {
+class Connect : public Base {
 	protected:
-		CCC* left; //Left child
-		CCC* right; //Right child
+		Base* left; //Left child
+		Base* right; //Right child
     public:
-        Connect(CCC* left, CCC* right); //TODO: Implement to call addleft and addright functions
-		CCC* getLeft() {return left; }
-		CCC* getRight() {return right; }
-		void addLeft(CCC* left);
-		void addRight(CCC* right);
+        Connect(Base* left, Base* right);
+		Base* getLeft() {return left; }
+		Base* getRight() {return right; }
+		void addLeft(Base* left);
+		void addRight(Base* right);
 
 		virtual bool executeCmd() = 0;
 }; //Connect class is for holding children and other connectors
 
 class And : public Connect{
 	public:
-		And(CCC* left, CCC* right):Connect(left,right){}
+		And(Base* left, Base* right):Connect(left,right){}
 		virtual bool executeCmd();
 };
 class Or : public Connect{
 	public:
-		Or(CCC* left, CCC* right):Connect(left,right){}
+		Or(Base* left, Base* right):Connect(left,right){}
 		virtual bool executeCmd();
 };
 class Semi : public Connect{
 	public:
-		Semi(CCC* left, CCC* right):Connect(left,right){}
+		Semi(Base* left, Base* right):Connect(left,right){}
 		virtual bool executeCmd();
 };
 
 class PipeCon : public Connect{
 	public:
-		PipeCon(CCC* left, CCC* right):Connect(left,right){}
+		PipeCon(Base* left, Base* right):Connect(left,right){}
 		virtual bool executeCmd();//Should open pipe, call executeCmd() on children, then close pipe ends
 };
 
-class DecoratorBase : public CCC{
+class DecoratorBase : public Base{
 	protected:
-		CCC* decoChild;
+		Base* decoChild;
 		string fileName;
 	public:
-		DecoratorBase(CCC* child, string fileName);// simply call addChild(child)
-		CCC* getChild();
+		DecoratorBase(Base* child, string fileName);// simply call addChild(child)
+		Base* getChild();
 		string getFileName();
 		virtual bool executeCmd() = 0;
 		void setFile(string fileName);
-		void addChild(CCC* child);
+		void addChild(Base* child);
 };
 class OutputOverwrite: public DecoratorBase{/* > symbol*/
 	public:
-		OutputOverwrite(CCC* child, string fileName):DecoratorBase(child, fileName){}
+		OutputOverwrite(Base* child, string fileName):DecoratorBase(child, fileName){}
 		virtual bool executeCmd();	//function should redirect output to a file,
 									//call the child's executeCmd, then reset to the original stdOut slot
 };
 class OutputAppend: public DecoratorBase{/* >> symbol*/
 	public:
-		OutputAppend(CCC* child, string fileName):DecoratorBase(child, fileName){}
+		OutputAppend(Base* child, string fileName):DecoratorBase(child, fileName){}
 		virtual bool executeCmd();
 };
 class InputRedirect: public DecoratorBase{/* < symbol*/
 	public:
-		InputRedirect(CCC* child, string fileName):DecoratorBase(child, fileName){}
+		InputRedirect(Base* child, string fileName):DecoratorBase(child, fileName){}
 		virtual bool executeCmd();
 };
 

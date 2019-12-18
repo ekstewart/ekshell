@@ -3,7 +3,7 @@
 
 #include <stack>
 #include <vector>
-#include "CCC.h"
+#include "base.h"
 #include "reference.h"
 
 class Read {

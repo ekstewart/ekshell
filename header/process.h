@@ -2,7 +2,7 @@
 #define PROCESS_H
 
 #include <string>
-#include "CCC.h"
+#include "base.h"
 
 class Process {
     private:

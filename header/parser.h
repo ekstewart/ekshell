@@ -1,5 +1,5 @@
-#ifndef MYREAD_HPP
-#define MYREAD_HPP
+#ifndef PARSER_H
+#define PARSER_H
 /**
  * @author Evan Stewart
  */
@@ -8,15 +8,15 @@
 #include <stack>
 using namespace std;
 
-class MyRead{
+class Parser{
 	private:
 		string trimWhitespace(string input);
 		vector<string> getTokens(string input);
 		
 	
 	public:
-		MyRead();
-		CCC* getTree(string input);
+		Parser();
+		Base* getTree(string input);
 };
 
 
