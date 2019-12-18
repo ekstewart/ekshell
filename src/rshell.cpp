@@ -1,22 +1,18 @@
-#include "../header/CCC.h"
-#include "../header/read.h"
-#include "../header/reference.h"
-//#include "../header/command.h"
+#include "../header/base.h"
+#include "../header/parser.h"
 
-#include "../src/CCC.cpp"
-#include "../src/read.cpp"
-#include "../src/reference.cpp"
-#include "../src/command.cpp"
+#include "../src/base.cpp"
+#include "parser.cpp"
 
 using namespace std;
 
 int main(){
     cout<<"************************************************"<<endl;
-    cout<<"WELCOME TO PROJECT_FAILED_SUCCESSFULLY'S RSHELL"<<endl;
+    cout<<"WELCOME TO EKSHELL"<<endl;
     cout<<"************************************************"<<endl;
 	
-	CCC* root;
-	Read* read = new Read();
+	Base* root;
+	Parser* p = new Parser();
     /*Repeating while loop to receive user input*/
     while(true)
     {

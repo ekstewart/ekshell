@@ -1,13 +1,13 @@
-#ifndef MYREAD_CPP
-#define MYREAD_CPP
+#ifndef PARSER_CPP
+#define PARSER_CPP
 
 #include <iostream>
 #include <stack>
 #include <vector>
-#include "../header/Parser.h"
+#include "../header/parser.h"
 using namespace std;
 
-string MyRead::trimWhitespace(string input)
+string Parser::trimWhitespace(string input)
 {
 	size_t len = input.length();
 	int st = 0;
@@ -19,7 +19,7 @@ string MyRead::trimWhitespace(string input)
 	}
 	return ((st > 0) || (len < input.length())) ? input.substr(st, len-st) : input;
 }
-vector<string> MyRead::getTokens(string input)
+vector<string> Parser::getTokens(string input)
 {
 	stack<string> quoteStack;
 	stack<string> parenStack;
@@ -36,14 +36,31 @@ vector<string> MyRead::getTokens(string input)
 			else
 				quoteStack.push("\"");
 		}
+		else if(input[i]=='#'){
+			input = "";
+			i = -1;//reset index variable after truncating input string
+		}
 		else if(input[i]=='('){
 			parenStack.push("(");
-			for(int j = i+1; parenStack.size()>0;j++){
+			int j;
+			for(j = i+1; parenStack.size()>0;j++){
 				if(input[j]==')')
+					parenStack.pop();
+				else if(input[j]=='#')
+					throw string inv("Incomplete parentheses found!");
 			}
 			nodeList.emplace_back(input.substr(i,j-i+1));
 			input = input.substr(j);
-			i = -1;
+			i = -1;//reset index variable after truncating input string
+		}
+		else if(input[i]=='&' && input[i+1]=='&'){//if next characters in a sequence are "&&" connector
+			
+		}
+		else if(input[i]=='|'){//if next characters are a pipe or "||" connector
+		
+		}
+		else if(input[i]==';'){//if next character is a semi colon connector
+		
 		}
 	}
 	
