@@ -1,5 +1,6 @@
-# Project derived from UCR Software Construction course:
+### Project derived from UCR Software Construction course
 
+#EKShell
 ## Introduction:
 Within the design specifications of this project, I created a command shell called rshell using C++.
 The command shell completes/seeks to complete the following tasks. 
