@@ -2,11 +2,11 @@
 #define EXEC_TEST_CPP
 
 #include "gtest/gtest.h"
-#include "../header/CCC.h"
-#include "../src/command.cpp"
+#include "../src/base.cpp"
+#include "../src/parser.cpp"
 #include <vector>
 
-TEST(ParseTest, ParseTestSingleToken)
+TEST(CommandParseTest, ParseTestSingleToken)
 {
     string testStr, str1 = "ls";
     Command* cmd = new Command(str1);
@@ -15,7 +15,7 @@ TEST(ParseTest, ParseTestSingleToken)
     EXPECT_EQ("ls", vec.at(0));
 }
 
-TEST(ParseTest, ParseTestManyTokens)
+TEST(CommandParseTest, ParseTestManyTokens)
 {
     string str1 = "ls -a -l";
     Command* cmd = new Command(str1);
@@ -25,7 +25,7 @@ TEST(ParseTest, ParseTestManyTokens)
     EXPECT_EQ("-a", vec.at(1));
     EXPECT_EQ("-l", vec.at(2));
 }
-TEST(ParseTest, ParseTestStringTokens)
+TEST(CommandParseTest, ParseTestStringTokens)
 {
     string str1 = "echo \"hello world\" \"oh && yeah\"";
     Command* cmd = new Command(str1);
@@ -56,7 +56,7 @@ TEST(ExecTest, TestSingleTokenExecFalse)
 
     EXPECT_FALSE(cmd->executeCmd());
 }
-TEST(ExecTest, TestFileTestCommand)
+TEST(TestTest, TestFileTestCommand)
 {
     string str1 = "[ -f names.txt ]";
 
@@ -64,7 +64,7 @@ TEST(ExecTest, TestFileTestCommand)
 
     EXPECT_TRUE(cmd->executeCmd());
 }
-TEST(ExecTest, TestDirectoryTestCommand)
+TEST(TestTest, TestDirectoryTestCommand)
 {
     string str1 = "[ -d src ]";
 
@@ -73,7 +73,7 @@ TEST(ExecTest, TestDirectoryTestCommand)
     EXPECT_TRUE(cmd->executeCmd());
 }
 
-TEST(ExecTest, TestExistsNoBracketsTestCommand)
+TEST(TestTest, TestExistsNoBracketsTestCommand)
 {
     string str1 = "test -e CMakeLists.txt";
 
@@ -82,7 +82,7 @@ TEST(ExecTest, TestExistsNoBracketsTestCommand)
     EXPECT_TRUE(cmd->executeCmd());
 }
 
-TEST(ExecTest, TestBadTestCommand)
+TEST(TestTest, TestBadTestCommand)
 {
     string str1 = "[ -f names.txt";
 
@@ -97,6 +97,46 @@ TEST(ExecTest, TestExitCommand)
     Command* cmd = new Command(str1);
     //cmd->executeCmd();
     //uncomment above to test exit command, which will exit from test function
+}
+TEST(TestTest, ReturnFalse)
+{
+    string next = "[ -e jjjijiofrjfrjio ]";
+    CCC* cmd = new Command(next);
+    
+    EXPECT_FALSE(cmd->executeCmd());
+}
+
+TEST(TestTest, ReturnTrue)
+{
+    string next = "[ -e src ]";
+    CCC* cmd = new Command(next);
+    
+    EXPECT_TRUE(cmd->executeCmd());
+}
+TEST(InputParse, ParseSingleCommand){
+    string str = "echo h";
+    Parser p;
+    vector<string> vec = p.getTokens(str);
+    
+    EXPECT_EQ(vec.at(0),"echo h");
+}
+TEST(InputParse, ParseConnectedCommands){
+    string str = "ls && echo h";
+    Parser p;
+    vector<string> vec = p.getTokens(str);
+    
+    EXPECT_EQ(vec.at(0),"ls");
+    EXPECT_EQ(vec.at(1),"&&");
+    EXPECT_EQ(vec.at(2),"echo h");
+}
+TEST(InputParse, ParseParentheses){
+    string str = "(jijiijijijij) && echo h";
+    Parser p;
+    vector<string> vec = p.getTokens(str);
+    
+    EXPECT_EQ(vec.at(0),"(jijiijijijij)");
+    EXPECT_EQ(vec.at(1),"&&");
+    EXPECT_EQ(vec.at(2),"echo h");
 }
 
 
