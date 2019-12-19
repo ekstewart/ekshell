@@ -11,12 +11,12 @@ using namespace std;
 class Parser{
 	private:
 		string trimWhitespace(string input);
-		vector<string> getTokens(string input);
-		
+		map<string,value> conMap;
 	
 	public:
 		Parser();
 		Base* getTree(string input);
+		vector<string> getTokens(string input);
 };
 
 
