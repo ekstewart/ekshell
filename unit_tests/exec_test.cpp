@@ -58,7 +58,7 @@ TEST(ExecTest, TestSingleTokenExecFalse)
 }
 TEST(TestTest, TestFileTestCommand)
 {
-    string str1 = "[ -f names.txt ]";
+    string str1 = "[ -f README.md ]";
 
     Command* cmd = new Command(str1);
 
@@ -101,7 +101,7 @@ TEST(ExecTest, TestExitCommand)
 TEST(TestTest, ReturnFalse)
 {
     string next = "[ -e jjjijiofrjfrjio ]";
-    CCC* cmd = new Command(next);
+    Base* cmd = new Command(next);
     
     EXPECT_FALSE(cmd->executeCmd());
 }
@@ -109,7 +109,7 @@ TEST(TestTest, ReturnFalse)
 TEST(TestTest, ReturnTrue)
 {
     string next = "[ -e src ]";
-    CCC* cmd = new Command(next);
+    Base* cmd = new Command(next);
     
     EXPECT_TRUE(cmd->executeCmd());
 }
@@ -117,7 +117,6 @@ TEST(InputParse, ParseSingleCommand){
     string str = "echo h";
     Parser p;
     vector<string> vec = p.getTokens(str);
-    
     EXPECT_EQ(vec.at(0),"echo h");
 }
 TEST(InputParse, ParseConnectedCommands){
@@ -137,6 +136,26 @@ TEST(InputParse, ParseParentheses){
     EXPECT_EQ(vec.at(0),"(jijiijijijij)");
     EXPECT_EQ(vec.at(1),"&&");
     EXPECT_EQ(vec.at(2),"echo h");
+}
+TEST(InputParse, ParseSingleRedirect){
+	string str = "cat < file.txt";
+	Parser p;
+	vector<string> vec = p.getTokens(str);
+	
+	EXPECT_EQ(vec.at(0),"cat");
+	EXPECT_EQ(vec.at(1),"<");
+	EXPECT_EQ(vec.at(2),"file.txt");
+}
+TEST(InputParse, ParseMultipleRedirect){
+	string str = "((echo h) >> file.txt)|less ; echo done";
+	Parser p;
+	vector<string> vec = p.getTokens(str);
+	
+	EXPECT_EQ(vec.at(0),"((echo h) >> file.txt)");
+	EXPECT_EQ(vec.at(1),"|");
+	EXPECT_EQ(vec.at(2),"less");
+	EXPECT_EQ(vec.at(3),";");
+	EXPECT_EQ(vec.at(4),"echo done");
 }
 
 

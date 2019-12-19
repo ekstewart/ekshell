@@ -2,8 +2,6 @@
 #define PIPE_TEST_CPP
 
 #include "gtest/gtest.h"
-#include "../header/base.h"
-#include "../src/command.cpp"
 #include "../src/base.cpp"
 /**
  * Need to check to make sure that this operation:

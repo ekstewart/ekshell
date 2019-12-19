@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-
+project(ekshell)
 ADD_SUBDIRECTORY(googletest)
 
 set(CMAKE_CXX_STANDARD 11)
