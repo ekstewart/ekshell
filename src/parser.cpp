@@ -10,7 +10,13 @@ using namespace std;
 
 Parser::Parser()
 {
-
+	conMap.insert(pair<string,int>("&&",0));
+	conMap.insert(pair<string,int>("||",1));
+	conMap.insert(pair<string,int>(";",2));
+	conMap.insert(pair<string,int>("|",3));
+	conMap.insert(pair<string,int>(">",4));
+	conMap.insert(pair<string,int>(">>",5));
+	conMap.insert(pair<string,int>("<",6));
 }
 
 string Parser::trimWhitespace(string input)
@@ -27,8 +33,6 @@ string Parser::trimWhitespace(string input)
 }
 vector<string> Parser::getTokens(string input)
 {
-	map<string,value> conMap;
-	conMap
 	stack<string> quoteStack;
 	stack<string> parenStack;
 	vector<string> nodeList; // composed of any type of Base pointer
@@ -94,17 +98,25 @@ vector<string> Parser::getTokens(string input)
 }
 Base* Parser::getTree(string input)
 {
+	Base* ptrLeft, ptrRight;
 	Base* root;
 	vector<string> vector = getTokens(input);
-	stack<string> cmdStack;
+	stack<Base*> cmdStack;
 	stack<string> conStack;
 	
 	/*Commence Shunting yard algorithm to create tree
 	 * using vector of command/connector tokens*/
-	for(string a:vector){
-		if(cmdStack.size()>1)
-		{
-			if()
+	for(int i = 0; i<vector.size();i++){//tokens can be paren'd, commands, connectors, file paths
+		if(vector.at(i)[0]=='('){//if parentheses node
+		
+		} else if(conMap.find(vector.at(i))!=conMap.end()){//if a connector
+		
+		} else{//if a single command
+		
+		}
+		if(cmdStack.size()>1){
+			string cmdRight = cmdStack.pop();
+			string cmdLeft = cmdStack.pop();
 		}
 	}
 }
