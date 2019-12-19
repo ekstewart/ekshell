@@ -1,8 +1,5 @@
-#include "../header/base.h"
-#include "../header/parser.h"
-
 #include "../src/base.cpp"
-#include "parser.cpp"
+#include "../src/parser.cpp"
 
 using namespace std;
 
@@ -16,7 +13,7 @@ int main(){
     /*Repeating while loop to receive user input*/
     while(true)
     {
-        root = read->inputTree();
+        //root = p->inputTree();
         root->executeCmd();
     }
 	
