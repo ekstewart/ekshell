@@ -1,7 +1,11 @@
-### Project derived from UCR Software Construction course
+### *Project derived from UCR Software Construction course*
 
 # EKShell
 ## Introduction:
+This is a relatively basic shell that is able to run simple executables and can be a stand in for other (way more advanced and useful) shells on the market. As of now the program is not able to be ran as I gutted out a large part of the code base (the part that parses out user input) so that I may implement a cleaner, more scalable version instead.
+#### Stay tuned!
+
+## Specifications:
 Within the design specifications of this project, I created a command shell called rshell using C++.
 The command shell completes/seeks to complete the following tasks. 
 - Reading commands and connectors from standard input
