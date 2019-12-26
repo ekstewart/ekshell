@@ -98,6 +98,8 @@ vector<string> Parser::getTokens(string input)
 }
 Base* Parser::getTree(string input)
 {
+	const int AND = 0, OR = 1, SEMI = 2, PIPE = 3, O_OVERWRITE = 4, O_APPEND = 5, INPUT_REDIRECT = 6;;
+
 	Base* ptrLeft, ptrRight;
 	Base* root;
 	vector<string> vector = getTokens(input);
@@ -106,6 +108,10 @@ Base* Parser::getTree(string input)
 	
 	/*Commence Shunting yard algorithm to create tree
 	 * using vector of command/connector tokens*/
+	if(trimWhitespace(input)==""){
+		cout<<"Empty input detected...returning null"<<endl;
+		return nullptr;
+	}
 	for(int i = 0; i<vector.size();i++){//tokens can be paren'd, commands, connectors, file paths
 		if(vector.at(i)[0]=='('){//if parentheses node
 		
@@ -114,9 +120,13 @@ Base* Parser::getTree(string input)
 		} else{//if a single command
 		
 		}
-		if(cmdStack.size()>1){
-			string cmdRight = cmdStack.pop();
-			string cmdLeft = cmdStack.pop();
+		if(cmdStack.size()==2){
+			ptrRight = cmdStack.pop();
+			ptrLeft = cmdStack.pop();
+			
+		}
+		else if(cmdStack.size()==1){
+			cmdStack.push()
 		}
 	}
 }
