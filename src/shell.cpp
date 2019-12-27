@@ -9,15 +9,14 @@ int main(){
     cout<<"************************************************"<<endl;
 	
 	Base* root;
-	Parser* p;
+	Parser p;
 	string input;
     /*Repeating while loop to receive user input*/
     while(true)
     {
-    	cout<<"$";
+    	cout<<"$ ";
     	getline(cin,input);
-    	cout<<"Input is "<<input<<endl;
-        root = p->getTree(input);
+        root = p.getTree(input);
         if(root!= nullptr){
 			root->executeCmd();
 		}

@@ -99,9 +99,9 @@ vector<string> Parser::getTokens(string input)
 Base* Parser::getTree(string input)
 {
 	const int AND = 0, OR = 1, SEMI = 2, PIPE = 3, OUTPUT_OVERWRITE = 4, OUTPUT_APPEND = 5, INPUT_REDIRECT = 6;
-	cout<<"Got here"<<endl;
 	Base* ptrLeft, *ptrRight;
 	Base* root;
+	Base* temp;
 	vector<string> vector = getTokens(input);
 	stack<Base*> cmdStack;
 	stack<string> conStack;
@@ -151,21 +151,24 @@ Base* Parser::getTree(string input)
 			else if(cmdStack.size()==1 && (conMap[conStack.top()]>=4 && conMap[conStack.top()]<=6)){
 				switch(conMap[conStack.top()]){
 					case OUTPUT_OVERWRITE:
-						cmdStack.push(new OutputOverwrite(cmdStack.top(),vector.at(i+1)));
-						cmdStack.pop();
-						conStack.pop();
+					    temp = cmdStack.top();
+                        cmdStack.pop();
+                        conStack.pop();
+                        cmdStack.push(new OutputOverwrite(temp,vector.at(i+1)));
 						i++;
 						break;
 					case OUTPUT_APPEND:
-						cmdStack.push(new OutputAppend(cmdStack.top(),vector.at(i+1)));
-						cmdStack.pop();
-						conStack.pop();
+                        temp = cmdStack.top();
+                        cmdStack.pop();
+                        conStack.pop();
+                        cmdStack.push(new OutputAppend(temp,vector.at(i+1)));
 						i++;
 						break;
 					case INPUT_REDIRECT :
-						cmdStack.push(new InputRedirect(cmdStack.top(),vector.at(i+1)));
-						cmdStack.pop();
-						conStack.pop();
+                        temp = cmdStack.top();
+                        cmdStack.pop();
+                        conStack.pop();
+                        cmdStack.push(new InputRedirect(temp,vector.at(i+1)));
 						i++;
 						break;
 					default:
@@ -174,7 +177,9 @@ Base* Parser::getTree(string input)
 				}
 			}
 		}
+		root = cmdStack.top();
 	}
+	return root;
 }
 
 
