@@ -99,7 +99,7 @@ vector<string> Parser::getTokens(string input)
 Base* Parser::getTree(string input)
 {
 	const int AND = 0, OR = 1, SEMI = 2, PIPE = 3, OUTPUT_OVERWRITE = 4, OUTPUT_APPEND = 5, INPUT_REDIRECT = 6;
-
+	cout<<"Got here"<<endl;
 	Base* ptrLeft, *ptrRight;
 	Base* root;
 	vector<string> vector = getTokens(input);
@@ -114,7 +114,7 @@ Base* Parser::getTree(string input)
 	}
 	for(int i = 0; i<vector.size();i++){//tokens can be paren'd, commands, connectors, file paths
 		if(vector.at(i)[0]=='('){//if parentheses node
-			cmdStack.push(getTree(vector.at(i).substr(1,vector.at(i).size()-2)))
+			cmdStack.push(getTree(vector.at(i).substr(1,vector.at(i).size()-2)));
 		} else if(conMap.find(vector.at(i))!=conMap.end()){//if a connector
 			conStack.push(vector.at(i));
 		} else{//if a single command

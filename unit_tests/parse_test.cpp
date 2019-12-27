@@ -51,7 +51,4 @@ TEST(InputParse, ParseMultipleRedirect){
 	EXPECT_EQ(vec.at(4),"echo done");
 }
 
-
-
-
 #endif
