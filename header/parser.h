@@ -11,7 +11,7 @@ using namespace std;
 class Parser{
 	private:
 		string trimWhitespace(string input);
-		map<string,value> conMap;
+		map<string,int> conMap;
 	
 	public:
 		Parser();
