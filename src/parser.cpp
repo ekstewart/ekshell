@@ -113,9 +113,9 @@ Base* Parser::getTree(string input)
 		return nullptr;
 	}
 	for(int i = 0; i<vector.size();i++){//tokens can be paren'd, commands, connectors, file paths
-		/*if(vector.at(i)[0]=='('){//if parentheses node
-		
-		} else */if(conMap.find(vector.at(i))!=conMap.end()){//if a connector
+		if(vector.at(i)[0]=='('){//if parentheses node
+			cmdStack.push(getTree(vector.at(i).substr(1,vector.at(i).size()-2)))
+		} else if(conMap.find(vector.at(i))!=conMap.end()){//if a connector
 			conStack.push(vector.at(i));
 		} else{//if a single command
 			cmdStack.push(new Command(vector.at(i)));
