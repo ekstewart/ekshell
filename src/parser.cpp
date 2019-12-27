@@ -98,9 +98,9 @@ vector<string> Parser::getTokens(string input)
 }
 Base* Parser::getTree(string input)
 {
-	const int AND = 0, OR = 1, SEMI = 2, PIPE = 3, O_OVERWRITE = 4, O_APPEND = 5, INPUT_REDIRECT = 6;;
+	const int AND = 0, OR = 1, SEMI = 2, PIPE = 3, OUTPUT_OVERWRITE = 4, OUTPUT_APPEND = 5, INPUT_REDIRECT = 6;
 
-	Base* ptrLeft, ptrRight;
+	Base* ptrLeft, *ptrRight;
 	Base* root;
 	vector<string> vector = getTokens(input);
 	stack<Base*> cmdStack;
@@ -113,20 +113,66 @@ Base* Parser::getTree(string input)
 		return nullptr;
 	}
 	for(int i = 0; i<vector.size();i++){//tokens can be paren'd, commands, connectors, file paths
-		if(vector.at(i)[0]=='('){//if parentheses node
+		/*if(vector.at(i)[0]=='('){//if parentheses node
 		
-		} else if(conMap.find(vector.at(i))!=conMap.end()){//if a connector
-		
+		} else */if(conMap.find(vector.at(i))!=conMap.end()){//if a connector
+			conStack.push(vector.at(i));
 		} else{//if a single command
-		
+			cmdStack.push(new Command(vector.at(i)));
 		}
-		if(cmdStack.size()==2){
-			ptrRight = cmdStack.pop();
-			ptrLeft = cmdStack.pop();
-			
-		}
-		else if(cmdStack.size()==1){
-			cmdStack.push()
+		if(conStack.size()==1){
+			if(cmdStack.size()==2){
+				ptrRight = cmdStack.top();
+				cmdStack.pop();
+				ptrLeft = cmdStack.top();
+				cmdStack.pop();
+				switch(conMap[conStack.top()]){
+					case AND:
+						cmdStack.push(new And(ptrLeft,ptrRight));
+						conStack.pop();
+						break;
+					case OR:
+						cmdStack.push(new Or(ptrLeft,ptrRight));
+						conStack.pop();
+						break;
+					case SEMI:
+						cmdStack.push(new Semi(ptrLeft,ptrRight));
+						conStack.pop();
+						break;
+					case PIPE:
+						cmdStack.push(new PipeCon(ptrLeft,ptrRight));
+						conStack.pop();
+						break;
+					default:
+						cout<<"Invalid connector found!"<<endl;
+						exit(1);
+				}
+			}
+			else if(cmdStack.size()==1 && (conMap[conStack.top()]>=4 && conMap[conStack.top()]<=6)){
+				switch(conMap[conStack.top()]){
+					case OUTPUT_OVERWRITE:
+						cmdStack.push(new OutputOverwrite(cmdStack.top(),vector.at(i+1)));
+						cmdStack.pop();
+						conStack.pop();
+						i++;
+						break;
+					case OUTPUT_APPEND:
+						cmdStack.push(new OutputAppend(cmdStack.top(),vector.at(i+1)));
+						cmdStack.pop();
+						conStack.pop();
+						i++;
+						break;
+					case INPUT_REDIRECT :
+						cmdStack.push(new InputRedirect(cmdStack.top(),vector.at(i+1)));
+						cmdStack.pop();
+						conStack.pop();
+						i++;
+						break;
+					default:
+						cout<<"Invalid connector found!"<<endl;
+						exit(1);
+				}
+			}
 		}
 	}
 }
