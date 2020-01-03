@@ -2,8 +2,17 @@
 
 # EKShell
 ## Introduction:
-This is a relatively basic shell that is able to run simple executables and can be a stand in for other (way more advanced and useful) shells on the market. As of now the program is not able to be ran as I gutted out a large part of the code base (the part that parses out user input) so that I may implement a cleaner, more scalable version instead.
-#### Stay tuned!
+This is a relatively basic shell that is able to run simple executables and can be a stand in for other (way more advanced and useful) shells on the market. 
+**To run this shell you must be on a linux shell and have either cmake or g++ installed**
+## Perform the following commands in your standard shell:
+- First clone the repository
+```git --recursive clone <git repo link>```
+- Then navigate into the repo's directory
+```cd ekshell```
+- Compile the files using the CMakeList.txt and one of the following commands
+```cmake . && make``` or ```cmake3 . && make```
+- If the `make` command runs successfully, you should generate the `shell` binary file in your ekshell/ directory. Go ahead and run the file with: 
+```./shell```
 
 ## Specifications:
 Within the design specifications of this project, I created a command shell called rshell using C++.
