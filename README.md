@@ -23,11 +23,13 @@ The command shell completes/seeks to complete the following tasks.
 - Allow for input redirection and piping
 - Allow for usage of the 'cd' command
 
-Within navigating the command shell there are some directories.
-Directory src/ contains all the source (.h/.cpp) files for the project.
-Directory header/ contains header
-Directory unit_test/ contains all the unit tests created from the Google Unit Test framework.
-Directory integration_test/ contains all the unit tests written from bash.
+## Directories:
+* **googletest**: Submodule that contains a copy of Google's testing framework.
+* **header**: Collection of all header files (files listing the headers for each class's member functions and variables.)
+* **images**: Images used/to be used in README
+* **prototype**: Small individual files testing out different linux functionalities and calls
+* **src**: Collection of all implementation files ( .cpp files containing function definitions)
+* **unit_tests**: Various files containing unit tests for different functionalities
 
 ## Classes:
 * Base: abstract class which implements specific behaviors with its child components.
